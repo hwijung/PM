@@ -1,3 +1,6 @@
 eclipse.preferences.version=1
 encoding//common/PPparser.py=utf-8
+encoding//monitor/crawler/__init__.py=utf-8
+encoding//monitor/crawler/crawler.py=utf-8
+encoding//monitor/parser/parser.py=utf-8
 encoding//templates/alarm_list.html=UTF-8

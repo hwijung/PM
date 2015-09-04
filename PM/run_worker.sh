@@ -1,0 +1,1 @@
+celery -A PM worker -l info --concurrency 1
