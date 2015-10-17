@@ -16,7 +16,7 @@ class NotificationMail:
 
     def send_mail(self, notification):
         # all information for noti is included in notification object
-        pass
+        pass 
 
     def _send_gmail(self, to, subject, text, html, attach):
         msg=MIMEMultipart('alternative')

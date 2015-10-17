@@ -3,8 +3,9 @@ from __future__ import absolute_import
 from celery.utils.log import get_task_logger
 from PM.celery import app
 
-from alarms.models import Setting
 from alarms.models import Alarm
+from alarms.models import Setting
+from alarms.models import SearchWord 
 # from alarm.utils import mail
 # from notier import NotierAgent
 from monitor.parser import parser
@@ -13,10 +14,10 @@ from monitor.crawler import crawler
 from threading import Lock
  
 logger = get_task_logger(__name__)
-
+'''
 class TestCrawler(crawler):
     def __init__(self):
-        super(TestCrawler, self).__init__()
+        super(self).__init__()
         self.process_lock = Lock()
 
     def process_document(self, doc):
@@ -27,7 +28,7 @@ class TestCrawler(crawler):
         
         self.process_lock.release()
  
-'''
+
 @app.task
 def scrap():
     pParsor = PpomppuParsor()
@@ -55,9 +56,28 @@ def scrap():
         
 @app.task
 def test():
-    print 2 + 2
+    p_parser = parser.Parser()
+    pp_title_objects = p_parser.get_ppomppu_entries()
+    fp_title_objects = p_parser.get_foreign_ppomppu_entries()
     
+    # extract users if there activated flag is on
+    all_usersettings = Setting.objects.filter( activated = True );
     
+    # From activated users.. 
+    for usersetting in all_usersettings:
+        # Get all activated alarms 
+        all_alarms = Alarm.objects.filter( user = usersetting.user, activated = True )
+        
+        # Get search words from activated alarms
+        for useralarm in all_alarms:
+            all_searchwords = SearchWord.objects.filter( alarms = useralarm )
+            
+            for searchword in all_searchwords:
+                print searchword
+    
+     # TODO: write another function to check and match keyword and parsing re.sults
+      
+
 def scrap_old():
     
     pParsor = parser()

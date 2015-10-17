@@ -20,7 +20,10 @@ class Parser:
     URLS = { '�˻ѰԽ���': 'http://www.ppomppu.co.kr/zboard/zboard.php?id=ppomppu',
                '�ؿܻ˻�': 'http://www.ppomppu.co.kr/zboard/zboard.php?id=ppomppu4' }
             
-    def _get_titles(self, url):
+    def __init__(self):
+        self.entries = {}
+        
+    def _get_entries(self, url):
         entries = []
         
         response = urllib2.urlopen(url)
@@ -79,9 +82,37 @@ class Parser:
                               'subject': subject, 'link': link, 'comment_number': comment_number,
                               'time': time, 'recommend': recommend, 'view': view, 'active': active } )
 
-        return entries                   
-    def get_ppomppu_titles(self):
-        return self._get_titles(self.Urls.PPOMPPU)
+        return entries    
+    
+    def refresh_all(self):
+        for url in self.entries.keys():
+            self.entries[url] = self._get_entries(url)
+              
+    def get_ppomppu_entries(self):
+        self.entries[self.Urls.PPOMPPU] = self._get_entries(self.Urls.PPOMPPU)
+        return self.entries[self.Urls.PPOMPPU]
         
-    def get_foreign_ppomppu_titles(self):
-        return self._get_titles(self.Urls.FOREIGN_PPOMPPU)
+    def get_foreign_ppomppu_entries(self):
+        self.entries[self.Urls.FOREIGN_PPOMPPU] = self._get_entries(self.Urls.FOREIGN_PPOMPPU)
+        return self.entries[self.Urls.FOREIGN_PPOMPPU]
+    
+    def match_ppomppu_titles(self, keyword):
+        # if there were no entries for ppomppu, get it from the Internet
+        if not self.Urls.PPOMPPU in self.entries:
+            self.get_ppomppu_entries()
+            
+        # pick each entries and try to find whether the keyword is included or not         
+        for entry in entries:
+            for fp_title in fp_title_objects:
+                
+                print "Searching... %s in %s" % ( fp_title['subject'], entry.keyword.text )
+                
+                # If there is keyword in the title...
+                if fp_title['subject'].find(entry.keyword.text) != -1:
+                    print "Found"        
+            
+        pass 
+    
+    def match_foreign_ppomppu_titles(self, keyword):
+        pass
+        
