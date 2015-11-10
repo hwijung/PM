@@ -98,18 +98,18 @@ class Parser:
     
     def match_ppomppu_titles(self, keyword):
         # if there were no entries for ppomppu, get it from the Internet
-        if not self.Urls.PPOMPPU in self.entries:
-            self.get_ppomppu_entries()
+        # if not self.Urls.PPOMPPU in self.entries:
+        #    self.get_ppomppu_entries()
             
         # pick each entries and try to find whether the keyword is included or not         
-        for entry in entries:
-            for fp_title in fp_title_objects:
+        # for entry in entries:
+        #    for fp_title in fp_title_objects:
                 
-                print "Searching... %s in %s" % ( fp_title['subject'], entry.keyword.text )
+        #        print "Searching... %s in %s" % ( fp_title['subject'], entry.keyword.text )
                 
                 # If there is keyword in the title...
-                if fp_title['subject'].find(entry.keyword.text) != -1:
-                    print "Found"        
+        #        if fp_title['subject'].find(entry.keyword.text) != -1:
+        #            print "Found"        
             
         pass 
     
