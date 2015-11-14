@@ -28,22 +28,22 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
  
     # Alarm Management 
-    url(r'^$', views.home),
-    url(r'^alarms/$', views.alarms_view),
-    url(r'^alarms/create/$', views.alarm_create_view),
-    url(r'^alarms/activate/$', views.alarm_activate),    
-    url(r'^alarms/([\w ]+)/$', views.alarm_view),
+    url(r'^$', views.home, name='alarms.views.home'),
+    url(r'^alarms/$', views.alarms_view, name='alarms.views.alarms_view'),
+    url(r'^alarms/create/$', views.alarm_create_view, name='alarms.views.alarm_create_view'),
+    url(r'^alarms/activate/$', views.alarm_activate, name='alarms.views.alarm_activate'),    
+    url(r'^alarms/([\w ]+)/$', views.alarm_view, name='alarms.views.alarms_view'),
 
    
     # Session Management
-    url(r'^login/$', views.login_view),
-    url(r'^logout/$', views.logout_view),
-    url(r'^signup/$', views.signup_view),
+    url(r'^login/$', views.login_view, name='alarms.views.login'),
+    url(r'^logout/$', views.logout_view, name='alarms.views.logout'),
+    url(r'^signup/$', views.signup_view, name='alarms.views.signup'),
     url(r'^signup/success/$', TemplateView.as_view(
-            template_name='signup_success.html'), name="home" ), 
+            template_name='signup_success.html'), name='alarms.views.signup_success' ), 
      
     # Settings 
-    url(r'^settings/$', views.settings_view),
+    url(r'^settings/$', views.settings_view, name='alarms.views.settings'),
 
     # Media/Static
 	url(r'^static/(?P<path>.*)$', 'django.views.static.serve', 

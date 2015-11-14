@@ -111,3 +111,6 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static/css'))
     ''' )
 LOGIN_URL = '/login/'
+
+# In the case of production test 
+SUB_URL = '/PM/'

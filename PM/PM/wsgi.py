@@ -7,10 +7,17 @@ For more information on this file, see
 https://docs.djangoproject.com/en/1.8/howto/deployment/wsgi/
 """
 
-import os
+import os, sys
+
+apache_configuration = os.path.dirname(__file__)
+project = os.path.dirname(apache_configuration)
+workspace = os.path.dirname(project)
+
+sys.path.append(workspace)
+sys.path.append(project)
+sys.path.append('/home/hwijung/workspace')
+
+os.environ['DJANGO_SETTINGS_MODULE'] = 'PM.settings'
 
 from django.core.wsgi import get_wsgi_application
-
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "PM.settings")
-
 application = get_wsgi_application()
