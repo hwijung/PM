@@ -12,6 +12,6 @@
 	
 	<h3>Thank you for registering.<br> Your information has been saved in the database. </h3>
 	<span class="help-block">
-		Now you can either <a href="/login/">login</a> or go back to the <a href="/">main page</a>.
+		Now you can either <a href="{% url 'alarms.views.login' %}">login</a> or go back to the <a href="{% url 'alarms.views.home' %}">main page</a>.
 	</span>
 {% endblock %}

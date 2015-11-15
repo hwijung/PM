@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 
 from django.core.exceptions import ValidationError, ObjectDoesNotExist
 from django.core.validators import validate_email
+from django.core.urlresolvers import reverse
 
 from django.db import IntegrityError
 from django.contrib.auth.models import User
@@ -70,7 +71,7 @@ def login_view(request):
 # Logout
 def logout_view ( request ):
     logout ( request )
-    return HttpResponseRedirect ( '/' )
+    return HttpResponseRedirect ( reverse('alarms.views.home') )
  
 # sign up view
 def signup_view(request):
@@ -88,9 +89,9 @@ def signup_view(request):
                 user = User.objects.create_superuser(username, email, password)
                 # user_setting = UserSetting.objects.create(beat=True, user = user)
                 # user_setting.save()
-                return HttpResponseRedirect('/signup/success')
+                return HttpResponseRedirect( reverse('alarms.views.signup_success') )
             else:
-                return HttpResponseRedirect('/')
+                return HttpResponseRedirect( reverse('alarms.views.home') )
     else:
         form = RegistrationForm()
 
@@ -132,7 +133,7 @@ def alarm_create_view(request):
         if form.is_valid():
             try:
                 Alarm.save_with_form(request.user, form)
-                return HttpResponseRedirect ( '/alarms/' )
+                return HttpResponseRedirect ( reverse('alarms.views.alarms_view') )
 
             # duplicated Title exception
             except IntegrityError as e:
@@ -160,7 +161,7 @@ def alarm_view(request, alarm_title):
         form = AlarmEditForm ( request.POST )
         if form.is_valid():
             Alarm.update(form)
-            return HttpResponseRedirect ( '/alarms/' ) 
+            return HttpResponseRedirect ( reverse('alarms.views.alarms_view') ) 
         else:
             print form.errors
     # Delete an alarm
