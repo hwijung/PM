@@ -3,7 +3,7 @@ $(document).ready( function()
 	var btnCreateEntry = $("#id_btn_create");
 
 	btnCreateEntry.click( function (event ) {
-		document.location.href = '/alarms/create'; 
+		document.location.href = './create'; 
 	});
 	
 	// Activate button clicked
@@ -26,7 +26,7 @@ $(document).ready( function()
 } );
 
 function activateAlarm( alarm_name, on ) {
-	var requestURL = "/alarms/activate/";
+	var requestURL = "./activate/";
 	var jqXHR = $.ajax ( {
 		xhr: function () {
 			var xhrobj = $.ajaxSettings.xhr();
@@ -45,7 +45,7 @@ function activateAlarm( alarm_name, on ) {
 
 
 function edit_click (clicked_id) {
-	document.location.href = '/alarms/' + clicked_id;
+	document.location.href = './' + clicked_id;
 }
 
 function delete_click( clicked_id ) {
@@ -53,7 +53,7 @@ function delete_click( clicked_id ) {
 	
 	if ( result ) {
 		$.ajax({
-			url: '/alarms/' + clicked_id + '/',
+			url: './' + clicked_id + '/',
 			type: 'DELETE',
 			beforeSend: function(xhr) {
 				xhr.setRequestHeader("X-CSRFToken", $.cookie("csrftoken"));

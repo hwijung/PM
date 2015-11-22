@@ -1,4 +1,4 @@
-<form id="save-form" method="post" action="/alarms/create/">{% csrf_token %}
+<form id="save-form" method="post" action="{% url 'alarms.views.alarm_create_view' %}">{% csrf_token %}
 
 	<div class="form-group">   	 
 		<label class="control-label" for="title">Title</label>
