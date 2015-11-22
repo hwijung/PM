@@ -96,6 +96,19 @@ class Parser:
         self.entries[self.Urls.FOREIGN_PPOMPPU] = self._get_entries(self.Urls.FOREIGN_PPOMPPU)
         return self.entries[self.Urls.FOREIGN_PPOMPPU]
     
+    def match_titles(self, url, keywords):
+        matched_entry = {}
+        
+        # check if there's the matching url in enties
+        if url in self.entries:
+            for entry in self.entries[url]:
+                for keyword in keywords:
+                    # if the keyword was in subject.. 
+                    if entry['subject'].find(keyword.search_word) != -1:
+                        matched_entry[keyword] = entry
+                      
+        return matched_entry
+    
     def match_ppomppu_titles(self, keyword):
         # if there were no entries for ppomppu, get it from the Internet
         # if not self.Urls.PPOMPPU in self.entries:

@@ -5,15 +5,18 @@ from PM.celery import app
 
 from alarms.models import Alarm
 from alarms.models import Setting
-from alarms.models import SearchWord 
-# from alarm.utils import mail
-# from notier import NotierAgent
+from alarms.models import SearchWord
+ 
 from monitor.parser import parser
 from monitor.crawler import crawler
 
+from notier.tasks import send_notification
+
 from threading import Lock
  
-logger = get_task_logger(__name__)
+ 
+ 
+# logger = get_task_logger(__name__)
 '''
 class TestCrawler(crawler):
     def __init__(self):
@@ -55,10 +58,10 @@ def scrap():
 ''' 
         
 @app.task
-def test():
+def check_alarm():
     p_parser = parser.Parser()
-    pp_title_objects = p_parser.get_ppomppu_entries()
-    fp_title_objects = p_parser.get_foreign_ppomppu_entries()
+    p_parser.get_ppomppu_entries()
+    p_parser.get_foreign_ppomppu_entries()
     
     # extract users if there activated flag is on
     all_usersettings = Setting.objects.filter( activated = True );
@@ -72,10 +75,14 @@ def test():
         for useralarm in all_alarms:
             all_searchwords = SearchWord.objects.filter( alarms = useralarm )
             
-            for searchword in all_searchwords:
-                print searchword
-    
-     # TODO: write another function to check and match keyword and parsing re.sults
+            # check and match keyword and parsing results
+            matched = p_parser.match_titles( useralarm.site, all_searchwords)
+            
+            send_notification(usersetting.user, matched)
+            
+            print matched.keys()
+            
+            # Notify if the search words were in titles
       
 
 def scrap_old():

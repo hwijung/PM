@@ -21,7 +21,7 @@ app.conf.update(
                 CELERYD_CONCURRENCY = 1,
                 CELERYBEAT_SCHEDULE = {
                     'runs-every-minutes': {
-                        'task':'monitor.tasks.test',
+                        'task':'monitor.tasks.check_alarm',
                         'schedule':timedelta(seconds=30)
                         }
 # CELERYBEAT_SCHEDULER = "djcelery.schedulers.DatabaseScheduler"
