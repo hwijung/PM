@@ -96,8 +96,9 @@ class Parser:
         self.entries[self.Urls.FOREIGN_PPOMPPU] = self._get_entries(self.Urls.FOREIGN_PPOMPPU)
         return self.entries[self.Urls.FOREIGN_PPOMPPU]
     
+    # return tuple list like [ ('a', entry object), ('b', entry object) ... ]
     def match_titles(self, url, keywords):
-        matched_entry = {}
+        matched_entries = []
         
         # check if there's the matching url in enties
         if url in self.entries:
@@ -105,9 +106,9 @@ class Parser:
                 for keyword in keywords:
                     # if the keyword was in subject.. 
                     if entry['subject'].find(keyword.search_word) != -1:
-                        matched_entry[keyword] = entry
+                        matched_entries.append((keyword, entry))
                       
-        return matched_entry
+        return matched_entries
     
     def match_ppomppu_titles(self, keyword):
         # if there were no entries for ppomppu, get it from the Internet

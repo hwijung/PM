@@ -80,11 +80,11 @@ def check_alarm():
             
             send_notification(usersetting.user, matched)
             
-            print matched.keys()
+            # print matched.keys()
             
             # Notify if the search words were in titles
       
-
+'''
 def scrap_old():
     
     pParsor = parser()
@@ -106,7 +106,7 @@ def scrap_old():
                       print "Found"
                     
                     # Send Notifying message 
-                    # NotierAgent.noty(user = u, fp_title )
+                    # send_notification(user = u,  )
                     
             # print bs.title
             # print bs.title.string
@@ -119,7 +119,7 @@ def scrap_old():
   
   #mail.send_gmail(to = 'hwijung.ryu@gmail.com', subject = 'Test', text = 'hello world',
   #                html = "", attach = "")  
-  
+'''  
     
 # A periodic task that will run every minute (the symbol "*" means every)
 '''
