@@ -13,11 +13,19 @@ class NotificationMail:
     _gmail_user="hwijung.ryu@gmail.com"
     _gmail_pwd="jafw,tie1" 
     _mail_template = "mail_template.html"
+    _subject_template = "subject_template.txt"
 
     def send_mail(self, notification):
-        # all information for noti is included in notification object
-        pass 
-
+        # all information for notification is included in notification object
+        email = notification.user_email
+        contents = notification.entry
+        
+        constructed_html = self._build_mail_html(contents)
+        constructed_subject = self._build_subject_text(contents.subject)
+        
+        self._send_gmail(email, constructed_subject, None, constructed_html, None)
+        
+        
     def _send_gmail(self, to, subject, text, html, attach):
         msg=MIMEMultipart('alternative')
         msg['From']=self._gmail_user  
@@ -57,10 +65,23 @@ class NotificationMail:
         s.sendmail(me, to, msg.as_string())
         s.quit()
 
-
+    def _build_subject_text(self, subject):
+        template = open(self._subject_template, "r")
+        template_subject = template.read()
+        
+        # replace subject with actual value
+        template_subject = template_subject.replace('{{subject}}', subject)
+        
+        template.close()
+        return template_subject
+    
     def _build_mail_html(self, contents):
         template = open(self._mail_template, "r")
         template_html = template.read()
+        
+        # replace all keys with actual values
+        for k,v in contents.iteritems():
+            template_html = template_html.replace('{{%s}}' % k,v)   
         template.close()
 
         return template_html
